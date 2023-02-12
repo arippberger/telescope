@@ -1,4 +1,17 @@
-import './globals.css'
+import './globals.css';
+import { Syne, Inter } from '@next/font/google';
+
+const syne = Syne({
+  weight: ['400', '600', '800'],
+  subsets: ['latin'],
+  variable: '--font-syne',
+});
+
+const inter = Inter({
+  weight: ['200', '400', '600', '700'],
+  subsets: ['latin'],
+  variable: '--font-inter',
+});
 
 export default function RootLayout({
   children,
@@ -12,7 +25,7 @@ export default function RootLayout({
         head.tsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
       */}
       <head />
-      <body>{children}</body>
+      <body className={`${inter.className}`}>{children}</body>
     </html>
   )
 }
