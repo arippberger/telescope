@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    formats: ['avif', 'webp', 'jpeg'],
+    formats: ['image/avif', 'image/webp'],
   },
   experimental: {
     appDir: true,
