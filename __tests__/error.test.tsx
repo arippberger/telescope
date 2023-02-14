@@ -1,42 +1,53 @@
-import { render, screen } from '@testing-library/react';
-import ErrorComponent from '../app/error';
-import '@testing-library/jest-dom';
+import { render, screen } from "@testing-library/react";
+import ErrorComponent from "../app/error";
+import "@testing-library/jest-dom";
 
-
-let testError = new Error('Test Error');
+let testError = new Error("Test Error");
 let resetClicked = false;
 let spy: jest.SpyInstance;
 
-describe('Error', () => {
-
+describe("Error", () => {
   beforeAll(() => {
-    spy = jest.spyOn(global.console, 'error').mockImplementation(() => {});
+    spy = jest.spyOn(global.console, "error").mockImplementation(() => {});
   });
 
   afterAll(() => {
     spy.mockRestore();
   });
 
-  it('renders a heading with error message', () => {
-    render(<ErrorComponent error={testError} reset={() => { }} />);
+  it("renders a heading and error message", () => {
+    render(<ErrorComponent error={testError} reset={() => {}} />);
 
-    const heading = screen.getByRole('heading', {
+    const heading = screen.getByRole("heading", {
       name: /Error Heading/i,
     });
 
-    expect(heading).toHaveTextContent('Error Test Error');
+    const message = screen.getByRole("alert", {
+      name: /Error Message/i,
+    });
+
     expect(heading).toBeInTheDocument();
+    expect(message).toBeInTheDocument();
+    expect(heading).toHaveTextContent("Error");
+    expect(message).toHaveTextContent("Test Error");
   });
 
-  it('calls console.error with the error', () => {
-    render(<ErrorComponent error={testError} reset={() => { }} />);
+  it("calls console.error with the error", () => {
+    render(<ErrorComponent error={testError} reset={() => {}} />);
     expect(console.error).toHaveBeenCalledTimes(2);
   });
 
-  it('provides a functioning reset button', () => {
-    render(<ErrorComponent error={testError} reset={() => { resetClicked = true }} />);
+  it("provides a functioning reset button", () => {
+    render(
+      <ErrorComponent
+        error={testError}
+        reset={() => {
+          resetClicked = true;
+        }}
+      />
+    );
 
-    const button = screen.getByRole('button', {
+    const button = screen.getByRole("button", {
       name: /Reset Error/i,
     });
 

@@ -11,12 +11,15 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        syne: ['var(--font-syne)'],
-        inter: ['var(--font-inter)'],
-      }
+        syne: ["var(--font-syne)"],
+        inter: ["var(--font-inter)"],
+      },
     },
   },
   plugins: [
-    require('@tailwindcss/forms'),
+    require("@tailwindcss/forms"),
+    require('@tailwindcss/typography'),
+    require('@tailwindcss/aspect-ratio'),
   ],
-}
+  darkMode: "class",
+};

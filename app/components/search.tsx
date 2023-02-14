@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import { MagnifyingGlassIcon, UsersIcon } from '@heroicons/react/20/solid'
-import { useState } from 'react';
+import { MagnifyingGlassIcon, UsersIcon } from "@heroicons/react/20/solid";
+import { useState } from "react";
 
 interface Props {
-  searchSubmit: (value: string) => void
+  searchSubmit: (value: string) => void;
 }
 
 export default function Search(props: Props) {
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
@@ -30,7 +30,7 @@ export default function Search(props: Props) {
             id="user"
             className="block w-full rounded-none rounded-l-md border-gray-300 pl-10 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             placeholder="arippberger"
-            value={searchValue} 
+            value={searchValue}
             onChange={handleChange}
           />
         </div>
@@ -39,10 +39,13 @@ export default function Search(props: Props) {
           onClick={() => props.searchSubmit(searchValue)}
           className="relative -ml-px inline-flex items-center space-x-2 rounded-r-md border border-gray-300 bg-gray-50 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
         >
-          <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+          <MagnifyingGlassIcon
+            className="h-5 w-5 text-gray-400"
+            aria-hidden="true"
+          />
           <span>Search</span>
         </button>
       </div>
     </div>
-  )
+  );
 }
