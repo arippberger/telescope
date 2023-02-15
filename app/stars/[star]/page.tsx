@@ -1,10 +1,10 @@
-import { Fragment, use } from "react";
-// import { Tab } from '@headlessui/react'
+import { use } from "react";
 import { gql } from "graphql-request";
-import Tabs from '../../components/tabs';
+import Tabs from "../../components/tabs";
+import Image from "next/image";
 
 const STARRED_REPOSITORY_QUERY = gql`
-query($name: String!, $owner: String!) {
+  query ($name: String!, $owner: String!) {
     repository(name: $name, owner: $owner) {
       collaborators {
         nodes {
@@ -142,24 +142,26 @@ function formatDate(date: string) {
 
 export default function Page({ params }: { params: { star: string } }) {
   const { data } = use(getRepoBySlug(params.star));
-
-  console.log("data", data);
-
   const repo = data.repository;
 
+  if (!repo) return <div>Not found</div>;
+
   return (
-    <div className="bg-white">
+    <>
       <div className="mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
         {/* Product */}
         <div className="lg:grid lg:grid-cols-7 lg:grid-rows-1 lg:gap-x-8 lg:gap-y-10 xl:gap-x-16">
           {/* Product image */}
           <div className="lg:col-span-4 lg:row-end-1">
             <div className="rounded-lg bg-gray-100">
-              <img
-                src={repo.openGraphImageUrl}
-                alt={`${repo.name} repository image`}
-                className="object-cover object-center"
-              />
+              {repo.openGraphImageUrl && (
+                <Image
+                  src={repo.openGraphImageUrl}
+                  alt={`${repo.name} repository image`}
+                  width={667}
+                  height={334}
+                />
+              )}
             </div>
           </div>
 
@@ -175,8 +177,14 @@ export default function Page({ params }: { params: { star: string } }) {
                   Starred Repository Information
                 </h2>
                 <p className="mt-2 text-sm text-gray-500">
-                  {repo.releases.nodes[0]?.tag?.name ? `Version ${repo.releases.nodes[0].tag.name}` : null} (Updated{" "}
-                  <time dateTime={repo.updatedAt}>{formatDate(repo.updatedAt)}</time>)
+                  {repo.releases.nodes[0]?.tag?.name
+                    ? `Version ${repo.releases.nodes[0].tag.name}`
+                    : null}{" "}
+                  (Updated{" "}
+                  <time dateTime={repo.updatedAt}>
+                    {formatDate(repo.updatedAt)}
+                  </time>
+                  )
                 </p>
               </div>
             </div>
@@ -199,20 +207,16 @@ export default function Page({ params }: { params: { star: string } }) {
               <div className="prose prose-sm mt-4 text-gray-500">
                 <ul role="list">
                   <li>
-                    <strong>Fork Count:</strong>{" "}
-                    {repo.forkCount}
+                    <strong>Fork Count:</strong> {repo.forkCount}
                   </li>
                   <li>
-                    <strong>Stargazer Count:</strong>{" "}
-                    {repo.stargazerCount}
+                    <strong>Stargazer Count:</strong> {repo.stargazerCount}
                   </li>
                   <li>
-                    <strong>Watchers Count:</strong>{" "}
-                    {repo.watchers.totalCount}
+                    <strong>Watchers Count:</strong> {repo.watchers.totalCount}
                   </li>
                   <li>
-                    <strong>Visibility:</strong>{" "}
-                    {repo.visibility}
+                    <strong>Visibility:</strong> {repo.visibility}
                   </li>
                 </ul>
               </div>
@@ -220,7 +224,9 @@ export default function Page({ params }: { params: { star: string } }) {
 
             {repo.licenseInfo && (
               <div className="mt-10 border-t border-gray-200 pt-10">
-                <h3 className="text-sm font-medium text-gray-900">{repo.licenseInfo.name}</h3>
+                <h3 className="text-sm font-medium text-gray-900">
+                  {repo.licenseInfo?.name}
+                </h3>
                 <p className="mt-4 text-sm text-gray-500">
                   {repo.licenseInfo.description}{" "}
                   <a
@@ -233,9 +239,9 @@ export default function Page({ params }: { params: { star: string } }) {
               </div>
             )}
           </div>
-            <Tabs repo={repo}></Tabs>
+          <Tabs repo={repo}></Tabs>
         </div>
       </div>
-    </div>
+    </>
   );
 }

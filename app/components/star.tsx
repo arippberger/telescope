@@ -5,12 +5,13 @@ import clsx from "clsx";
 import Link from "next/link";
 
 interface Repo {
+  slug: string;
   description: string;
   forkCount: number;
   isPrivate: boolean;
   languages: {
     edges: any;
-  };
+  },
   name: string;
   nameWithOwner: string;
   pushedAt: string;

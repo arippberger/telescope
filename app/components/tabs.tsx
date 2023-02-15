@@ -33,7 +33,41 @@ interface Commit {
   };
 }
 
-export default function Tabs({repo}) {
+interface Repo {
+  name: string,
+  nameWithOwner: string,
+  description: string,
+  url: string,
+  stargazerCount: number,
+  forkCount: number,
+  isPrivate: boolean,
+  pushedAt: string,
+  updatedAt: string,
+  stargazers: {
+    nodes: Stargazer[],
+  },
+  languages: {
+    edges: {
+      node: {
+        id: string,
+        name: string,
+        color: string
+      },
+    }[],
+  },
+  repositoryTopics: {
+    nodes: Topic[],
+  },
+  commitComments: {
+    nodes: Commit[],
+  },
+  licenseInfo: {
+    name: string,
+    description: string,
+  },
+}
+
+export default function Tabs({ repo }: { repo: Repo }) {
   return (
     <div className="mx-auto mt-16 w-full max-w-2xl lg:col-span-4 lg:mt-0 lg:max-w-none">
       <Tab.Group as="div">
@@ -80,33 +114,20 @@ export default function Tabs({repo}) {
         <Tab.Panels as={Fragment}>
           <Tab.Panel className="-mb-10">
             <h3 className="sr-only">Topics</h3>
-            
-
+            <div className="py-2 space-x-3 space-y-4">
             {repo.repositoryTopics.nodes ? repo.repositoryTopics.nodes.map(
               (topic: Topic, topicCount: number) => (
-                <div
-                  key={topic.topic.id}
-                  className="flex space-x-4 text-sm text-gray-500"
-                >
-                  <div
-                    className={clsx(
-                      topicCount === 0 ? "" : "border-t border-gray-200",
-                      "py-10"
-                    )}
-                  >
-                    <h3 className="font-medium text-gray-900">
+                    <a role="link" key={topic.topic.id} href={topic.url} className="hover:bg-gray-200 inline-flex items-center rounded-full bg-gray-100 px-3 py-0.5 text-sm font-medium text-gray-800">
                       {topic.topic.name}
-                    </h3>
-                    <a href={topic.url}>View Topic</a>
-                  </div>
-                </div>
+                    </a>
               )
             ) : <p>No Topics</p>}
+            </div>
           </Tab.Panel>
 
           <Tab.Panel className="text-sm text-gray-500">
             <h3 className="sr-only">Stargazers</h3>
-            <ul>
+            <ul className="py-4 space-y-4">
               {repo.stargazers?.nodes?.map((stargazer: Stargazer) => (
                 <li
                   key={stargazer.id}
@@ -138,9 +159,9 @@ export default function Tabs({repo}) {
             </ul>
           </Tab.Panel>
 
-          <Tab.Panel className="pt-10">
+          <Tab.Panel className="pt-4">
             <h3 className="sr-only">Commits</h3>
-            <ul>
+            <ul className="space-y-4">
               {repo.commitComments?.nodes?.map((commit: Commit) => (
                 <li
                   key={commit.id}
