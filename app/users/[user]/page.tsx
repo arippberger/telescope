@@ -1,7 +1,8 @@
-import Heading from "./components/heading";
-import HomeSearch from "./components/home-search";
+import Heading from "../../components/heading";
+import SearchStars from "../../components/search-stars";
 
-export default function Page() {
+export default function Page({params}: {params: {user: string}}) {
+
   return (
     <main>
       <div className="relative px-6 lg:px-8">
@@ -15,14 +16,14 @@ export default function Page() {
                 level={1}
                 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl"
               >
-                Telescope
+                Telescope (User)
               </Heading>
               <p className="mt-6 text-lg leading-8 text-gray-600">
                 Explore a GitHub user&apos;s stars using the GitHub Graphql API.
               </p>
             </div>
           </div>
-          <HomeSearch />
+          <SearchStars user={params.user} />
         </div>
         <div className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]">
           <svg

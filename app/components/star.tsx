@@ -1,35 +1,40 @@
+'use client';
+
 import { Menu, Transition } from "@headlessui/react";
 import { EyeIcon, StarIcon, EllipsisVerticalIcon } from "@heroicons/react/20/solid";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import clsx from "clsx";
 import Link from "next/link";
 
 interface Repo {
-  slug: string;
-  description: string;
-  forkCount: number;
-  isPrivate: boolean;
+  slug: string,
+  description: string,
+  forkCount: number,
+  isPrivate: boolean,
   languages: {
-    edges: any;
+    edges: any,
   },
-  name: string;
-  nameWithOwner: string;
-  pushedAt: string;
-  repositoryTopics: Object;
-  stargazerCount: number;
-  updatedAt: string;
-  url: string;
-  href: string;
-  initials: string;
+  name: string,
+  nameWithOwner: string,
+  pushedAt: string,
+  repositoryTopics: Object,
+  stargazerCount: number,
+  updatedAt: string,
+  url: string,
+  href: string,
+  initials: string,
 }
 
 interface Props {
-  repo: Repo;
+  repo: Repo,
+  searchValue: string,
 }
 
 const userSignedIn = false;
 
-export default function Star({ repo }: { repo: Repo }) {
+export default function Star(props: Props) {
+  const { repo, searchValue } = props;
+
   return (
     <li key={repo.name} className="col-span-1 flex rounded-md shadow-sm">
       <div
@@ -42,14 +47,13 @@ export default function Star({ repo }: { repo: Repo }) {
       >
         {repo.initials}
       </div>
-      <div className="overflow-visible flex flex-1 items-center justify-between rounded-r-md border-t border-r border-b border-gray-200 bg-white">
+      <div className={clsx("flex flex-1 items-center justify-between rounded-r-md border-t border-r border-b border-gray-200 bg-white")}>
         <div className="flex-1 truncate px-4 py-2 text-sm">
-          <a
-            href={repo.href}
-            className="font-medium text-gray-900 hover:text-gray-600"
+          <h4
+            className="font-medium text-gray-900"
           >
             {repo.name}
-          </a>
+          </h4>
           <p className="text-gray-500">{repo.stargazerCount} Stars</p>
         </div>
         <div className="flex-shrink-0 pr-2">
@@ -96,7 +100,7 @@ export default function Star({ repo }: { repo: Repo }) {
                   <Menu.Item>
                     {({ active }) => (
                       <Link
-                        href={`/stars/${repo.slug}`}
+                        href={`/users/${searchValue}/stars/${repo.slug}`}
                         className={clsx(
                           active
                             ? "bg-gray-100 text-gray-900"

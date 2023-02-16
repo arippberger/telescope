@@ -1,7 +1,8 @@
 import { use } from "react";
 import { gql } from "graphql-request";
-import Tabs from "../../components/tabs";
+import Tabs from "../../../../components/tabs";
 import Image from "next/image";
+import Link from "next/link";
 
 const STARRED_REPOSITORY_QUERY = gql`
   query ($name: String!, $owner: String!) {
@@ -140,7 +141,7 @@ function formatDate(date: string) {
   });
 }
 
-export default function Page({ params }: { params: { star: string } }) {
+export default function Page({ params }: { params: { star: string, user: string } }) {
   const { data } = use(getRepoBySlug(params.star));
   const repo = data.repository;
 
@@ -150,6 +151,14 @@ export default function Page({ params }: { params: { star: string } }) {
     <>
       <div className="mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:max-w-7xl lg:px-8">
         {/* Product */}
+        <div className="mb-10">
+          <Link
+            href={`/users/${params.user}`}
+            className="text-sm font-semibold leading-7 text-indigo-600"
+          >
+            <span aria-hidden="true">&larr;</span> Back
+          </Link>
+        </div>
         <div className="lg:grid lg:grid-cols-7 lg:grid-rows-1 lg:gap-x-8 lg:gap-y-10 xl:gap-x-16">
           {/* Product image */}
           <div className="lg:col-span-4 lg:row-end-1">

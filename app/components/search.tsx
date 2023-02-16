@@ -1,20 +1,91 @@
+"use client";
+
 import { MagnifyingGlassIcon, UsersIcon } from "@heroicons/react/20/solid";
+import { gql } from "graphql-request";
+import Link from "next/link";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 interface Props {
   searchValue: string;
-  handleSearch: any,
-  setSearchValue: any,
+  setStars: Dispatch<SetStateAction<any>>;
+  setSearchValue: Dispatch<SetStateAction<any>>;
+}
+
+const USER_STARRED_REPOSITORIES_QUERY = gql`
+  query ($username: String!) {
+    user(login: $username) {
+      starredRepositories(
+        first: 12
+        orderBy: { direction: DESC, field: STARRED_AT }
+      ) {
+        totalCount
+        nodes {
+          name
+          nameWithOwner
+          description
+          url
+          stargazerCount
+          forkCount
+          isPrivate
+          pushedAt
+          updatedAt
+          languages(first: 1, orderBy: { field: SIZE, direction: DESC }) {
+            edges {
+              node {
+                id
+                name
+                color
+              }
+            }
+          }
+          repositoryTopics(first: 100) {
+            nodes {
+              topic {
+                name
+                stargazerCount
+              }
+            }
+          }
+        }
+        pageInfo {
+          endCursor
+          hasNextPage
+        }
+      }
+    }
+  }
+`;
+
+function getUserStarsUsingFetch(username: string) {
+  return fetch("https://api.github.com/graphql", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
+    },
+    body: JSON.stringify({
+      query: USER_STARRED_REPOSITORIES_QUERY,
+      variables: {
+        username: username,
+      },
+    }),
+  }).then((res) => res.json());
 }
 
 export default function Search(props: Props) {
+  const [data, setData] = useState(null);
+  const [isLoading, setLoading] = useState(false);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    props.setSearchValue(e.target.value);
-  };
+  useEffect(() => {
+    setLoading(true);
+    getUserStarsUsingFetch(props.searchValue).then((data) => {
+      props.setStars({ data });
+      setLoading(false);
+    });
+  }, []);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    props.handleSearch();
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    props.setSearchValue(event.target.value);
   };
 
   return (
@@ -22,13 +93,13 @@ export default function Search(props: Props) {
       <label htmlFor="user" className="block text-sm font-medium text-gray-700">
         Enter GitHub Username
       </label>
-      <form onSubmit={handleSubmit} className="mt-1 flex rounded-md shadow-sm">
+      <form className="mt-1 flex rounded-md shadow-sm">
         <div className="relative flex flex-grow items-stretch focus-within:z-10">
           <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
             <UsersIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
           </div>
           <input
-            type="user"
+            type="search"
             name="user"
             id="user"
             role="textbox"
@@ -38,9 +109,8 @@ export default function Search(props: Props) {
             onChange={handleInputChange}
           />
         </div>
-        <button
-          role="button"
-          type="submit"
+        <Link
+          href={props.searchValue ? `/users/${props.searchValue}` : '/'}
           className="relative -ml-px inline-flex items-center space-x-2 rounded-r-md border border-gray-300 bg-gray-50 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
         >
           <MagnifyingGlassIcon
@@ -48,7 +118,7 @@ export default function Search(props: Props) {
             aria-hidden="true"
           />
           <span>Search</span>
-        </button>
+        </Link>
       </form>
     </div>
   );
