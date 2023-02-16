@@ -6,6 +6,8 @@ You can access the site on Vercel at https://telescope-iota.vercel.app.
 
 ## About
 
+![SPA](https://user-images.githubusercontent.com/1673133/219481062-02d6b5ca-7967-47e5-a7c0-79a845e00209.JPG)
+
 ### What is this?
 
 Telescope is a NextJS demo app that allows a user to search the stars of any GitHub user. It was built in a short 1-week timeline using the follwoing technologies:
