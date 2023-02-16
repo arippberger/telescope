@@ -55,6 +55,6 @@ describe("Error", () => {
 
     button.click();
 
-    expect(resetClicked).toBe(true);
+    expect(resetClicked).toBe(true);s
   });
 });
