@@ -3,6 +3,7 @@
 import { Tab } from "@headlessui/react";
 import clsx from "clsx";
 import { Fragment } from "react";
+import Image from "next/image";
 
 interface Stargazer {
   avatarUrl: string;
@@ -141,10 +142,12 @@ export default function Tabs({ repo }: { repo: Repo }) {
                   className="relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-400"
                 >
                   <div className="flex-shrink-0">
-                    <img
+                    <Image
+                      height={40}
+                      width={40}
                       className="h-10 w-10 rounded-full"
                       src={stargazer.avatarUrl}
-                      alt=""
+                      alt="Stargazer Avatar"
                     />
                   </div>
                   <div className="min-w-0 flex-1">
@@ -172,7 +175,9 @@ export default function Tabs({ repo }: { repo: Repo }) {
                   className="relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-400"
                 >
                   <div className="flex-shrink-0">
-                    <img
+                    <Image
+                      height={40}
+                      width={40}
                       className="h-10 w-10 rounded-full"
                       src={commit.author.avatarUrl}
                       alt="Commit Author Image"

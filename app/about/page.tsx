@@ -18,7 +18,7 @@ export default function Page() {
               width={672}
               height={375}
               className="my-8"
-              alt='Meme of an old man named "Jeremy". The image is captioned "Create an SPA is not difficult at all". His age is listed as 38."'
+              alt="Meme of an old man named Jeremy. The image is captioned Create an SPA is not difficult at all. His age is listed as 38."
             />
             <Heading level={2} className={"text-3xl mt-2 mb-4"}>
               What is this?
@@ -62,18 +62,18 @@ export default function Page() {
               I struggled with a decesion between using Create React App or
               NextJS. The project requirements made this seem like an easy
               choice for CRA (single page app). But like a moth to a flame I was
-              drawn to that new hottness. Yes, I'm talking about NestJS 13, with
-              the new (still in beta) app directory layout. This did simplify
-              building SPA style routing, but introduced a host of complexity to
-              testing and general overhead. I also wanted to see if I could
-              improve accesiblility, SEO and performance with NextJS.
+              drawn to that new hottness. Yes, I&apos;m talking about NestJS 13,
+              with the new (still in beta) app directory layout. This did
+              simplify building SPA style routing, but introduced a host of
+              complexity to testing and general overhead. I also wanted to see
+              if I could improve accesiblility, SEO and performance with NextJS.
             </p>
             <Heading level={4} className={"mt-4 mb-2 text-lg"}>
               JavaScript vs TypeScript
             </Heading>
             <p>
-              Attmitedly (and as I'm sure you can tell reading the code) I do
-              not have a ton of experience using TypeScript. I last used
+              Attmitedly (and as I&apos;m sure you can tell reading the code) I
+              do not have a ton of experience using TypeScript. I last used
               TypeScript professionally over 2 years ago, and was pleasently
               surprised at how much the tooling has improved. I was able to get
               up and running with TypeScript in NextJS in a matter of minutes,
@@ -103,12 +103,12 @@ export default function Page() {
             </Heading>
             <p>
               Similarly to the choice between JavaScript and TypeScript, I use
-              REST APIs daily, while I haven't worked with GraphQL
+              REST APIs daily, while I haven&apos;t worked with GraphQL
               professionally in over 2 years. I again was pleasently surprise by
               how the tooling has improved in that time. The GitHub GraphQL
               documentation was great and I was able to grab just the data I
-              needed with very little effort (although I'm sure I could clean up
-              the queries a bit more).
+              needed with very little effort (although I&apos;m sure I could
+              clean up the queries a bit more).
             </p>
             <Heading level={4} className={"mt-4 mb-2 text-lg"}>
               MacOS vs Windows
@@ -117,31 +117,31 @@ export default function Page() {
               I typically do my professional and personal development on a Mac,
               but since I was treating this project as an excercise in
               masochism, I might as go all the way right? Thank goodness for
-              Windows Subsystem for Linux (WSL) it's integration with VSCode on
-              Windows 11. It might actually be easier to get a project up and
-              running on a Windows machine now than a Mac.
+              Windows Subsystem for Linux (WSL) it&apos;s integration with
+              VSCode on Windows 11. It might actually be easier to get a project
+              up and running on a Windows machine now than a Mac.
             </p>
             <Heading level={4} className={"mt-4 mb-2 text-lg"}>
               Vue.js vs React
             </Heading>
             <p>
-              Well, this one really isn't a choice: it was in the requirements.
-              I just wanted to mention that professinally I've been using Vue.js
-              exclusively for some time. While I have done some personal
-              projects in React over the last two years, It was a bit
-              challenging to break my mind out of the "Vue.js way" of doing
-              things.
+              Well, this one really isn&apos;t a choice: it was in the
+              requirements. I just wanted to mention that professinally
+              I&apos;ve been using Vue.js exclusively for some time. While I
+              have done some personal projects in React over the last two years,
+              It was a bit challenging to break my mind out of the
+              &quot;Vue.js&quot; way of doing things.
             </p>
             <Heading level={3} className={"mt-5 mb-3 text-xl"}>
               Potential Future Improvements
             </Heading>
             <p>
-              There are a number of items I had as "stretch goals" that I wasn't
-              able to accomplish in the short timeline.
+              There are a number of items I had as &quot;stretch goals&quot;
+              that I wasn&apos;t able to accomplish in the short timeline.
               <ul className="list-disc pl-5 mb-4 mt-2">
                 <li>
                   Add a graph of the different repository languanges a user has
-                  starred. We're already pulling this information down.
+                  starred. We&apos;re already pulling this information down.
                 </li>
                 <li>
                   Add Supabase integration - allow users to log in and star
@@ -156,8 +156,8 @@ export default function Page() {
                   alternative to Cypress.
                 </li>
                 <li>
-                  UI/UX Improvements - There are places where the loading isn't
-                  tight and interactivity isn't highlighted.
+                  UI/UX Improvements - There are places where the loading
+                  isn&apos;t tight and interactivity isn&apos;t highlighted.
                 </li>
                 <li>
                   Caching = I tried getting SWR up and running with GraphQL but
@@ -166,17 +166,17 @@ export default function Page() {
               </ul>
             </p>
             <Heading level={2} className={"text-3xl mt-4 mb-4"}>
-              What this isn't
+              What this isn&apos;t
             </Heading>
             <p>
-              Perfect. I clearly didn't get to all I wanted to. The test
-              coverage isn't all there. While the app should be accesible the
-              performance didn't pan out. There are still a few red squiglees in
-              the codebase, <code>any</code> is sprinked throughout and I'm
-              still not 100% sure how to properly use generics. However, I do
-              think this was a succesful excercise and learning experience, and
-              I'm excited to continue to work on and improve the project in the
-              future.
+              Perfect. I clearly didn&apos;t get to all I wanted to. The test
+              coverage isn&apos;t all there. While the app should be accesible
+              the performance didn&apos;t pan out. There are still a few red
+              squiglees in the codebase, <code>any</code> is sprinked throughout
+              and I&apos;m still not 100% sure how to properly use generics.
+              However, I do think this was a succesful excercise and learning
+              experience, and I&apos;m excited to continue to work on and
+              improve the project in the future.
             </p>
           </div>
         </div>
