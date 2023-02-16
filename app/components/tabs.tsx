@@ -34,37 +34,37 @@ interface Commit {
 }
 
 interface Repo {
-  name: string,
-  nameWithOwner: string,
-  description: string,
-  url: string,
-  stargazerCount: number,
-  forkCount: number,
-  isPrivate: boolean,
-  pushedAt: string,
-  updatedAt: string,
+  name: string;
+  nameWithOwner: string;
+  description: string;
+  url: string;
+  stargazerCount: number;
+  forkCount: number;
+  isPrivate: boolean;
+  pushedAt: string;
+  updatedAt: string;
   stargazers: {
-    nodes: Stargazer[],
-  },
+    nodes: Stargazer[];
+  };
   languages: {
     edges: {
       node: {
-        id: string,
-        name: string,
-        color: string
-      },
-    }[],
-  },
+        id: string;
+        name: string;
+        color: string;
+      };
+    }[];
+  };
   repositoryTopics: {
-    nodes: Topic[],
-  },
+    nodes: Topic[];
+  };
   commitComments: {
-    nodes: Commit[],
-  },
+    nodes: Commit[];
+  };
   licenseInfo: {
-    name: string,
-    description: string,
-  },
+    name: string;
+    description: string;
+  };
 }
 
 export default function Tabs({ repo }: { repo: Repo }) {
@@ -115,13 +115,20 @@ export default function Tabs({ repo }: { repo: Repo }) {
           <Tab.Panel className="-mb-10">
             <h3 className="sr-only">Topics</h3>
             <div className="py-2 space-x-3 space-y-4">
-            {repo.repositoryTopics.nodes ? repo.repositoryTopics.nodes.map(
-              (topic: Topic, index) => (
-                    <a role="link" key={`${topic.topic.id}-${index}`} href={topic.url} className="hover:bg-gray-200 inline-flex items-center rounded-full bg-gray-100 px-3 py-0.5 text-sm font-medium text-gray-800">
-                      {topic.topic.name}
-                    </a>
-              )
-            ) : <p>No Topics</p>}
+              {repo.repositoryTopics.nodes ? (
+                repo.repositoryTopics.nodes.map((topic: Topic, index) => (
+                  <a
+                    role="link"
+                    key={`${topic.topic.id}-${index}`}
+                    href={topic.url}
+                    className="hover:bg-gray-200 inline-flex items-center rounded-full bg-gray-100 px-3 py-0.5 text-sm font-medium text-gray-800"
+                  >
+                    {topic.topic.name}
+                  </a>
+                ))
+              ) : (
+                <p>No Topics</p>
+              )}
             </div>
           </Tab.Panel>
 
@@ -141,17 +148,14 @@ export default function Tabs({ repo }: { repo: Repo }) {
                     />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <a href="#" className="focus:outline-none">
+                    <a href={stargazer.url} className="focus:outline-none">
                       <span className="absolute inset-0" aria-hidden="true" />
                       <p className="text-sm font-medium text-gray-900">
                         {stargazer.name}
                       </p>
-                      <a
-                        href={stargazer.url}
-                        className="truncate text-sm text-gray-500"
-                      >
+                      <span className="truncate text-sm text-gray-500">
                         {stargazer.url}
-                      </a>
+                      </span>
                     </a>
                   </div>
                 </li>
@@ -175,17 +179,14 @@ export default function Tabs({ repo }: { repo: Repo }) {
                     />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <a href="#" className="focus:outline-none">
+                    <a href={commit.url} className="focus:outline-none">
                       <span className="absolute inset-0" aria-hidden="true" />
                       <p className="text-sm font-medium text-gray-900">
                         {commit.bodyText}
                       </p>
-                      <a
-                        href={commit.url}
-                        className="truncate text-sm text-gray-500"
-                      >
+                      <span className="truncate text-sm text-gray-500">
                         {commit.commit.message ?? "View Commit"}
-                      </a>
+                      </span>
                     </a>
                   </div>
                 </li>

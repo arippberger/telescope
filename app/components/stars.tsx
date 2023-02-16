@@ -6,7 +6,7 @@ interface Stars {
   user: {
     starredRepositories: {
       totalCount: number;
-      edges: any,
+      edges: any;
       pageInfo: {
         endCursor: string;
         hasNextPage: boolean;
@@ -45,7 +45,6 @@ export interface RepoObject {
 }
 
 export default function Stars(props: Props) {
-
   const repos = props.stars.user.starredRepositories.edges.map(
     (repo: RepoObject) => {
       const node = repo.node;

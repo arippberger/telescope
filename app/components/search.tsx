@@ -68,26 +68,7 @@ const USER_STARRED_REPOSITORIES_QUERY = gql`
   }
 `;
 
-// function getUserStarsUsingFetch(username: string, cursor?: string) {
-//   return fetch("https://api.github.com/graphql", {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//       Authorization: `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
-//     },
-//     body: JSON.stringify({
-//       query: USER_STARRED_REPOSITORIES_QUERY,
-//       variables: {
-//         username: username,
-//         cursor: cursor,
-//       },
-//     }),
-//   }).then((res) => res.json());
-// }
-
 export default function Search(props: Props) {
-
-
   const getUserStarsUsingFetch = (username: string, cursor?: string) => {
     props.setIsLoading(true);
     return fetch("https://api.github.com/graphql", {
@@ -105,13 +86,12 @@ export default function Search(props: Props) {
       }),
     }).then((res) => {
       props.setIsLoading(false);
-      return res.json()
+      return res.json();
     });
   };
 
   useEffect(() => {
-
-    getUserStarsUsingFetch(props.searchValue, props.cursor).then(({data}) => {
+    getUserStarsUsingFetch(props.searchValue, props.cursor).then(({ data }) => {
       props.setStars(data);
 
       if (data.user.starredRepositories.pageInfo.hasNextPage) {
@@ -146,6 +126,7 @@ export default function Search(props: Props) {
             type="search"
             name="user"
             id="user"
+            data-testid="search-input"
             role="textbox"
             className="block w-full rounded-none rounded-l-md border-gray-300 pl-10 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             placeholder="arippberger"
@@ -154,7 +135,8 @@ export default function Search(props: Props) {
           />
         </div>
         <Link
-          href={props.searchValue ? `/users/${props.searchValue}` : '/'}
+          data-testid="search-button"
+          href={props.searchValue ? `/users/${props.searchValue}` : "/"}
           className="relative -ml-px inline-flex items-center space-x-2 rounded-r-md border border-gray-300 bg-gray-50 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
         >
           <MagnifyingGlassIcon

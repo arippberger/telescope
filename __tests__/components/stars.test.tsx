@@ -1,49 +1,81 @@
 import { render } from "@testing-library/react";
-import Stars, { RepoObject } from '../../app/components/stars';
+import Stars, { RepoObject } from "../../app/components/stars";
+import Star from "../../app/components/star";
 
-const testStars: RepoObject[] = [
-  {
-    description: "test description",
-    forkCount: 1,
-    isPrivate: false,
-    languages: { edges: [] },
-    name: "Test Repo",
-    nameWithOwner: "testuser/test-repo",
-    pushedAt: "2022-02-14T15:19:21Z",
-    repositoryTopics: {},
-    stargazerCount: 5,
-    updatedAt: "2022-02-14T15:19:21Z",
-    url: "https://github.com/testuser/test-repo",
-    href: "https://github.com/testuser/test-repo",
-  },
-];
-
-const testProps = {
-  searchValue: "testuser",
+const mockProps = {
+  searchValue: "test",
   stars: {
     user: {
       starredRepositories: {
-        totalCount: 1,
-        nodes: testStars,
+        totalCount: 2,
+        edges: [
+          {
+            starredAt: "2022-01-01",
+            node: {
+              name: "Test Repo 1",
+              nameWithOwner: "user/repo1",
+              description: "Test repo 1",
+              forkCount: 1,
+              isPrivate: false,
+              languages: {
+                edges: [{ node: { name: "JavaScript" } }],
+              },
+              pushedAt: "2022-01-01T00:00:00Z",
+              repositoryTopics: { edges: [] },
+              stargazerCount: 10,
+              updatedAt: "2022-01-01T00:00:00Z",
+              url: "https://github.com/user/repo1",
+              href: "https://github.com/user/repo1",
+            },
+          },
+          {
+            starredAt: "2022-01-02",
+            node: {
+              name: "Test Repo 2",
+              nameWithOwner: "user/repo2",
+              description: "Test repo 2",
+              forkCount: 0,
+              isPrivate: true,
+              languages: {
+                edges: [{ node: { name: "TypeScript" } }],
+              },
+              pushedAt: "2022-01-02T00:00:00Z",
+              repositoryTopics: { edges: [] },
+              stargazerCount: 5,
+              updatedAt: "2022-01-02T00:00:00Z",
+              url: "https://github.com/user/repo2",
+              href: "https://github.com/user/repo2",
+            },
+          },
+        ],
+        pageInfo: {
+          endCursor: "cursor",
+          hasNextPage: false,
+          hasPreviousPage: false,
+          startCursor: "cursor",
+        },
       },
     },
   },
 };
 
 describe("Stars", () => {
-  it("renders with correct title", () => {
-    const { getByText } = render(<Stars {...testProps} />);
-    const title = getByText(`${testProps.searchValue}'s GitHub Stars`);
-    expect(title).toBeInTheDocument();
-  });
+  it("renders correctly with props", () => {
+    const { getByText, getAllByRole } = render(<Stars {...mockProps} />);
 
-  it("does not render when no stars are present", () => {
-    const { container } = render(
-      <Stars
-        searchValue={testProps.searchValue}
-        stars={{ user: { starredRepositories: { totalCount: 0, nodes: [] } } }}
-      />
-    );
-    expect(container.firstChild).toBeNull();
+    expect(getByText("test's GitHub Stars")).toBeInTheDocument();
+
+    const stars = getAllByRole("listitem");
+    expect(stars).toHaveLength(2);
+
+    stars.forEach((star, index) => {
+      const name = star.querySelector("h4");
+      const count = star.querySelector("p");
+
+      expect(name).toHaveTextContent(
+        index === 0 ? "Test Repo 1" : "Test Repo 2"
+      );
+      expect(count).toHaveTextContent(index === 0 ? "10 Stars" : "5 Stars");
+    });
   });
 });
