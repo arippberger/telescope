@@ -4,15 +4,21 @@ import { useState } from "react";
 import Search from "./search";
 import Stars from "./stars";
 import { FadeLoader } from "react-spinners";
+import Pagination from "./pagination";
 
 interface Stars {
-  data: {
-    data: {
-      user: {
-        starredRepositories: {
-          totalCount: number;
-          nodes: any;
-        };
+  user: {
+    starredRepositories: {
+      totalCount: number;
+      edges: {
+        starredAt: string;
+        node: any;
+      };
+      pageInfo: {
+        endCursor: string;
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor: string;
       };
     };
   };
@@ -24,11 +30,33 @@ interface Props {
 
 export default function SearchStars(props: Props) {
   const [searchValue, setSearchValue] = useState(props.user ?? "");
-  const [stars, setStars] = useState<Stars>({
-    data: {
-      data: { user: { starredRepositories: { totalCount: 0, nodes: [] } } },
+  const [nextPage, setNextPage] = useState("");
+  const [previousPage, setPreviousPage] = useState("");
+  const [page, setPage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [stars, setStars] = useState<any>({
+    user: {
+      starredRepositories: {
+        totalCount: 0,
+        edges: [],
+        pageInfo: {
+          endCursor: "",
+          hasNextPage: false,
+          hasPreviousPage: false,
+          startCursor: "",
+        },
+      },
     },
   });
+
+  const handleNextPage = ({ cursor }: { cursor: string }) => {
+    setPage(cursor);
+  };
+
+  const handlePreviousPage = ({ cursor }: { cursor: string }) => {
+    setPage(cursor);
+  };
 
   return (
     <>
@@ -36,13 +64,27 @@ export default function SearchStars(props: Props) {
         searchValue={searchValue}
         setStars={setStars}
         setSearchValue={setSearchValue}
+        setNextPage={setNextPage}
+        setPreviousPage={setPreviousPage}
+        cursor={page}
+        setIsLoading={setIsLoading}
       />
-      {stars.data.data.user?.starredRepositories.totalCount > 0 ? (
-        <Stars searchValue={searchValue} stars={stars} />
-      ) : (
-        <div className="flex justify-center my-10">
+      {isLoading ? (
+        <div className="flex justify-center my-1 mt-20">
           <FadeLoader color="#9089FC" />
         </div>
+      ) : (
+        <>
+          <Stars searchValue={searchValue} stars={stars} />
+          <div>
+            <Pagination
+              handleNextPage={handleNextPage}
+              handlePreviousPage={handlePreviousPage}
+              nextPage={nextPage}
+              previousPage={previousPage}
+            />
+          </div>
+        </>
       )}
     </>
   );

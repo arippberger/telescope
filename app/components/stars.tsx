@@ -1,19 +1,20 @@
-'use client';
+"use client";
 
 import Star from "./star";
-import { FadeLoader } from "react-spinners";
 
 interface Stars {
-  data: {
-    data: {
-      user: {
-        starredRepositories: {
-          totalCount: number;
-          nodes: RepoObject[];
-        };
+  user: {
+    starredRepositories: {
+      totalCount: number;
+      edges: any,
+      pageInfo: {
+        endCursor: string;
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor: string;
       };
-    }
-  }
+    };
+  };
 }
 
 interface Props {
@@ -21,7 +22,7 @@ interface Props {
   stars: Stars;
 }
 
-export interface RepoObject {
+interface RepoNode {
   description: string;
   forkCount: number;
   isPrivate: boolean;
@@ -38,17 +39,25 @@ export interface RepoObject {
   href: string;
 }
 
-export default function Stars(props: Props) {
-  if (!props?.stars?.data?.data) return <FadeLoader />;
+export interface RepoObject {
+  starredAt: string;
+  node: RepoNode;
+}
 
-  const repos = props.stars.data.data.user.starredRepositories.nodes.map(
+export default function Stars(props: Props) {
+
+  const repos = props.stars.user.starredRepositories.edges.map(
     (repo: RepoObject) => {
+      const node = repo.node;
+
       return {
-        ...repo,
+        ...node,
         name:
-          repo.name.length > 12 ? repo.name.slice(0, 12) + "..." : repo.name,
-        slug: repo.nameWithOwner.replace(/\//g, "-"),
-        initials: repo.name
+          node.name.length > 12
+            ? node.name.slice(0, 12) + "..."
+            : repo.node.name,
+        slug: node.nameWithOwner.replace(/\//g, "-"),
+        initials: node.name
           .split(/[-_]/)
           .map((word: string) => word[0])
           .join("")
@@ -57,7 +66,7 @@ export default function Stars(props: Props) {
     }
   );
 
-  return props.stars.data.data.user.starredRepositories.nodes.length ? (
+  return (
     <div className="mt-10 flex items-center justify-center gap-x-6">
       <div>
         {props.searchValue && (
@@ -70,12 +79,19 @@ export default function Stars(props: Props) {
           className="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4"
         >
           {repos.map(
-            (repo: RepoObject & { initials: string; slug: string }) => (
-              <Star key={repo.name} repo={repo} searchValue={props.searchValue} />
+            (
+              repo: RepoNode & { initials: string; slug: string },
+              index: any
+            ) => (
+              <Star
+                key={`${repo.name}-${index}`}
+                repo={repo}
+                searchValue={props.searchValue}
+              />
             )
           )}
         </ul>
       </div>
     </div>
-  ) : null;
+  );
 }

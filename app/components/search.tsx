@@ -7,42 +7,52 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 interface Props {
   searchValue: string;
+  cursor?: string;
   setStars: Dispatch<SetStateAction<any>>;
   setSearchValue: Dispatch<SetStateAction<any>>;
+  setNextPage: Dispatch<SetStateAction<any>>;
+  setPreviousPage: Dispatch<SetStateAction<any>>;
+  setIsLoading: Dispatch<SetStateAction<any>>;
 }
 
 const USER_STARRED_REPOSITORIES_QUERY = gql`
-  query ($username: String!) {
+  query ($username: String!, $cursor: String) {
     user(login: $username) {
       starredRepositories(
         first: 12
+        after: $cursor
         orderBy: { direction: DESC, field: STARRED_AT }
       ) {
         totalCount
-        nodes {
-          name
-          nameWithOwner
-          description
-          url
-          stargazerCount
-          forkCount
-          isPrivate
-          pushedAt
-          updatedAt
-          languages(first: 1, orderBy: { field: SIZE, direction: DESC }) {
-            edges {
-              node {
-                id
-                name
-                color
+        edges {
+          starredAt
+          node {
+            name
+            nameWithOwner
+            name
+            nameWithOwner
+            description
+            url
+            stargazerCount
+            forkCount
+            isPrivate
+            pushedAt
+            updatedAt
+            languages(first: 1, orderBy: { field: SIZE, direction: DESC }) {
+              edges {
+                node {
+                  id
+                  name
+                  color
+                }
               }
             }
-          }
-          repositoryTopics(first: 100) {
-            nodes {
-              topic {
-                name
-                stargazerCount
+            repositoryTopics(first: 10) {
+              nodes {
+                topic {
+                  name
+                  stargazerCount
+                }
               }
             }
           }
@@ -50,39 +60,73 @@ const USER_STARRED_REPOSITORIES_QUERY = gql`
         pageInfo {
           endCursor
           hasNextPage
+          hasPreviousPage
+          startCursor
         }
       }
     }
   }
 `;
 
-function getUserStarsUsingFetch(username: string) {
-  return fetch("https://api.github.com/graphql", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
-    },
-    body: JSON.stringify({
-      query: USER_STARRED_REPOSITORIES_QUERY,
-      variables: {
-        username: username,
-      },
-    }),
-  }).then((res) => res.json());
-}
+// function getUserStarsUsingFetch(username: string, cursor?: string) {
+//   return fetch("https://api.github.com/graphql", {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//       Authorization: `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
+//     },
+//     body: JSON.stringify({
+//       query: USER_STARRED_REPOSITORIES_QUERY,
+//       variables: {
+//         username: username,
+//         cursor: cursor,
+//       },
+//     }),
+//   }).then((res) => res.json());
+// }
 
 export default function Search(props: Props) {
-  const [data, setData] = useState(null);
-  const [isLoading, setLoading] = useState(false);
+
+
+  const getUserStarsUsingFetch = (username: string, cursor?: string) => {
+    props.setIsLoading(true);
+    return fetch("https://api.github.com/graphql", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_GITHUB_TOKEN}`,
+      },
+      body: JSON.stringify({
+        query: USER_STARRED_REPOSITORIES_QUERY,
+        variables: {
+          username: username,
+          cursor: cursor,
+        },
+      }),
+    }).then((res) => {
+      props.setIsLoading(false);
+      return res.json()
+    });
+  };
 
   useEffect(() => {
-    setLoading(true);
-    getUserStarsUsingFetch(props.searchValue).then((data) => {
-      props.setStars({ data });
-      setLoading(false);
+
+    getUserStarsUsingFetch(props.searchValue, props.cursor).then(({data}) => {
+      props.setStars(data);
+
+      if (data.user.starredRepositories.pageInfo.hasNextPage) {
+        props.setNextPage({
+          cursor: data.user.starredRepositories.pageInfo.endCursor,
+        });
+      }
+
+      if (data.user.starredRepositories.pageInfo.hasPreviousPage) {
+        props.setPreviousPage({
+          cursor: data.user.starredRepositories.pageInfo.startCursor,
+        });
+      }
     });
-  }, []);
+  }, [props.cursor]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     props.setSearchValue(event.target.value);
@@ -93,7 +137,7 @@ export default function Search(props: Props) {
       <label htmlFor="user" className="block text-sm font-medium text-gray-700">
         Enter GitHub Username
       </label>
-      <form className="mt-1 flex rounded-md shadow-sm">
+      <div className="mt-1 flex rounded-md shadow-sm">
         <div className="relative flex flex-grow items-stretch focus-within:z-10">
           <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
             <UsersIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
@@ -119,7 +163,7 @@ export default function Search(props: Props) {
           />
           <span>Search</span>
         </Link>
-      </form>
+      </div>
     </div>
   );
 }

@@ -116,8 +116,8 @@ export default function Tabs({ repo }: { repo: Repo }) {
             <h3 className="sr-only">Topics</h3>
             <div className="py-2 space-x-3 space-y-4">
             {repo.repositoryTopics.nodes ? repo.repositoryTopics.nodes.map(
-              (topic: Topic, topicCount: number) => (
-                    <a role="link" key={topic.topic.id} href={topic.url} className="hover:bg-gray-200 inline-flex items-center rounded-full bg-gray-100 px-3 py-0.5 text-sm font-medium text-gray-800">
+              (topic: Topic, index) => (
+                    <a role="link" key={`${topic.topic.id}-${index}`} href={topic.url} className="hover:bg-gray-200 inline-flex items-center rounded-full bg-gray-100 px-3 py-0.5 text-sm font-medium text-gray-800">
                       {topic.topic.name}
                     </a>
               )
@@ -128,9 +128,9 @@ export default function Tabs({ repo }: { repo: Repo }) {
           <Tab.Panel className="text-sm text-gray-500">
             <h3 className="sr-only">Stargazers</h3>
             <ul className="py-4 space-y-4">
-              {repo.stargazers?.nodes?.map((stargazer: Stargazer) => (
+              {repo.stargazers?.nodes?.map((stargazer: Stargazer, index) => (
                 <li
-                  key={stargazer.id}
+                  key={`${stargazer.id}-${index}`}
                   className="relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-400"
                 >
                   <div className="flex-shrink-0">
@@ -162,9 +162,9 @@ export default function Tabs({ repo }: { repo: Repo }) {
           <Tab.Panel className="pt-4">
             <h3 className="sr-only">Commits</h3>
             <ul className="space-y-4">
-              {repo.commitComments?.nodes?.map((commit: Commit) => (
+              {repo.commitComments?.nodes?.map((commit: Commit, index) => (
                 <li
-                  key={commit.id}
+                  key={`${commit.id}-${index}`}
                   className="relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-400"
                 >
                   <div className="flex-shrink-0">

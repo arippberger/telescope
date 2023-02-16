@@ -16,7 +16,7 @@ export default function Page({params}: {params: {user: string}}) {
                 level={1}
                 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl"
               >
-                Telescope (User)
+                Telescope
               </Heading>
               <p className="mt-6 text-lg leading-8 text-gray-600">
                 Explore a GitHub user&apos;s stars using the GitHub Graphql API.
