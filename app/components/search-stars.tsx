@@ -76,7 +76,7 @@ export default function SearchStars(props: Props) {
       ) : (
         <>
           <Stars searchValue={searchValue} stars={stars} />
-          <div>
+          <div className="container mx-auto">
             <Pagination
               handleNextPage={handleNextPage}
               handlePreviousPage={handlePreviousPage}
