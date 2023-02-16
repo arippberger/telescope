@@ -2,6 +2,7 @@
 import "./globals.css";
 import { Inter } from "@next/font/google";
 import Nav from "./components/nav";
+import type { Metadata } from "next";
 
 const inter = Inter({
   weight: ["200", "400", "600", "700"],
@@ -10,7 +11,7 @@ const inter = Inter({
   display: "swap",
 });
 
-const metadata = {
+export const metadata: Metadata = {
   title: {
     default: "Telescope | Explore GitHub Stars",
     template: "%s | Telescope | Explore GitHub Stars",
