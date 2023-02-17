@@ -13,6 +13,8 @@ const customJestConfig = {
   setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
   // if using TypeScript with a baseUrl set to the root directory then you need the below for alias' to work
   moduleDirectories: ["node_modules", "<rootDir>/"],
+  // ignore playwright tests
+  modulePathIgnorePatterns: ["<rootDir>/e2e", "<rootDir>/e2e-examples"],
 
   // If you're using [Module Path Aliases](https://nextjs.org/docs/advanced-features/module-path-aliases),
   // you will have to add the moduleNameMapper in order for jest to resolve your absolute paths.

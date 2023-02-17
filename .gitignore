@@ -37,3 +37,6 @@ next-env.d.ts
 
 # jetbrains
 .idea
+/test-results/
+/playwright-report/
+/playwright/.cache/

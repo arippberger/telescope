@@ -4,6 +4,10 @@ You'll need to create a `.env.local` file in the root and add a `NEXT_PUBLIC_GIT
 
 You can access the site on Vercel at https://telescope-iota.vercel.app.
 
+### Tests
+
+You Can run the component tests with `npm run test`. End-to-end tests can be run with `npm run e2e`.
+
 ## About
 
 ![SPA](https://user-images.githubusercontent.com/1673133/219481062-02d6b5ca-7967-47e5-a7c0-79a845e00209.JPG)
@@ -51,6 +55,10 @@ Similarly to the choice between JavaScript and TypeScript, I use REST APIs daily
 
 I typically do my professional and personal development on a Mac, but since I was treating this project as an exercise in masochism, I might as go all the way right? Thank goodness for Windows Subsystem for Linux (WSL) it's integration with VSCode on Windows 11. It might actually be easier to get a project up and running on a Windows machine now than a Mac.
 
+##### Cypress vs Playwright
+
+I've used Cypress for a few years now and have been very happy with it. I was excited to try Playwright as an alternative. It was super simple to set up, and has a built in test generator. I may need to implement Playwright in my day-to-day work.
+
 ##### Vue.js vs React
 
 Well, this one really isn't a choice: it was in the requirements. I just wanted to mention that professionally I've been using Vue.js exclusively for some time. While I have done some personal projects in React over the last two years, It was a bit challenging to break my mind out of the "Vue.js way" of doing things.
@@ -62,7 +70,6 @@ There are a number of items I had as "stretch goals" that I wasn't able to accom
 - Add a graph of the different repository languages a user has starred. We're already pulling this information down.
 - Add Supabase integration - allow users to log in and star repositories directly.
 - Night theme - not having a starry background feels like a huge miss.
-- Implement Playwright - I was excited to try this as an alternative to Cypress.
 - UI/UX Improvements - There are places where the loading isn't tight and interactivity isn't highlighted.
 - Caching = I tried getting SWR up and running with GraphQL but hit a roadblock and ran out of time.
 

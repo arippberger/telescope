@@ -123,6 +123,15 @@ export default function Page() {
               running on a Windows machine now than a Mac.
             </p>
             <Heading level={4} className={"mt-4 mb-2 text-lg"}>
+              Cypress vs Playwright
+            </Heading>
+            <p>
+              I&apos;ve used Cypress for some time now and have been very happy
+              with it. I was excited to try Playwright as an alternative. It was
+              super simple to set up, and has a built in test generator. I may
+              need to implement Playwright in my day-to-day work.
+            </p>
+            <Heading level={4} className={"mt-4 mb-2 text-lg"}>
               Vue.js vs React
             </Heading>
             <p>
@@ -176,8 +185,8 @@ export default function Page() {
               squiggles in the codebase, <code>any</code> is sprinkled
               throughout and I&apos;m still not 100% sure how to properly use
               generics. However, I do think this was a successful exercise and
-              learning experience, and I'm excited to continue to work on and
-              improve the project in the future.
+              learning experience, and I&apos;m excited to continue to work on
+              and improve the project in the future.
             </p>
           </div>
         </div>
