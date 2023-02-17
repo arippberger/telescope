@@ -48,13 +48,13 @@ describe("Error", () => {
     );
 
     const button = screen.getByRole("button", {
-      name: /Reset Error/i,
+      name: /Reset /i,
     });
 
     expect(button).toBeInTheDocument();
 
     button.click();
 
-    expect(resetClicked).toBe(true);s
+    expect(resetClicked).toBe(true);
   });
 });
