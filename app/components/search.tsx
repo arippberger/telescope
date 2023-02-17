@@ -4,7 +4,7 @@ import { MagnifyingGlassIcon, UsersIcon } from "@heroicons/react/20/solid";
 import { gql } from "graphql-request";
 import Link from "next/link";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { cursorTo } from "readline";
+import { useRef } from "react";
 
 interface Props {
   searchValue: string;
@@ -123,6 +123,15 @@ export default function Search(props: Props) {
     setSearchValue(event.target.value);
   };
 
+  const buttonRef = useRef<HTMLAnchorElement>(null);
+
+  const handleKeyPress = (event: { key: string }) => {
+    if (event.key === "Enter" && buttonRef.current !== null) {
+      buttonRef.current.focus();
+      buttonRef.current.click();
+    }
+  };
+
   return (
     <div className="mt-10 flex items-center justify-center gap-x-6">
       <label htmlFor="user" className="block text-sm font-medium text-gray-700">
@@ -142,19 +151,25 @@ export default function Search(props: Props) {
             className="block w-full rounded-none rounded-l-md border-gray-300 pl-10 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             placeholder="arippberger"
             value={searchValue}
+            onKeyDown={handleKeyPress}
             onChange={handleInputChange}
           />
         </div>
         <Link
+          legacyBehavior={true}
           data-testid="search-button"
           href={searchValue ? `/users/${searchValue}` : "/"}
-          className="relative -ml-px inline-flex items-center space-x-2 rounded-r-md border border-gray-300 bg-gray-50 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
         >
-          <MagnifyingGlassIcon
-            className="h-5 w-5 text-gray-400"
-            aria-hidden="true"
-          />
-          <span>Search</span>
+          <a
+            ref={buttonRef}
+            className="relative -ml-px inline-flex items-center space-x-2 rounded-r-md border border-gray-300 bg-gray-50 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+          >
+            <MagnifyingGlassIcon
+              className="h-5 w-5 text-gray-400"
+              aria-hidden="true"
+            />
+            <span>Search</span>
+          </a>
         </Link>
       </div>
     </div>

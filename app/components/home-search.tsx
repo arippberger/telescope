@@ -1,9 +1,13 @@
 "use client";
 
 import { MagnifyingGlassIcon, UsersIcon } from "@heroicons/react/20/solid";
-import clsx from "clsx";
 import Link from "next/link";
-import { useState } from "react";
+import React, { RefObject } from "react";
+import { useRef, useState } from "react";
+
+interface ButtonRefInterface {
+  divRef: RefObject<HTMLDivElement>;
+}
 
 export default function HomeSearch() {
   const [searchValue, setSearchValue] = useState("");
@@ -18,6 +22,15 @@ export default function HomeSearch() {
     if (searchValue === "") {
       setIsEmptyError(true);
       e.preventDefault();
+    }
+  };
+
+  const buttonRef = useRef<HTMLAnchorElement>(null);
+
+  const handleKeyPress = (event: { key: string }) => {
+    if (event.key === "Enter" && buttonRef.current !== null) {
+      buttonRef.current.focus();
+      buttonRef.current.click();
     }
   };
 
@@ -44,6 +57,7 @@ export default function HomeSearch() {
               placeholder="arippberger"
               value={searchValue}
               onChange={handleInputChange}
+              onKeyDown={handleKeyPress}
             />
           </div>
 
@@ -60,15 +74,20 @@ export default function HomeSearch() {
             </button>
           ) : (
             <Link
+              legacyBehavior={true}
               href={`/users/${searchValue}`}
               onClick={handleEmptySearch}
-              className="relative -ml-px inline-flex items-center space-x-2 rounded-r-md border border-gray-300 bg-gray-50 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
             >
-              <MagnifyingGlassIcon
-                className="h-5 w-5 text-gray-400"
-                aria-hidden="true"
-              />
-              <span>Search</span>
+              <a
+                ref={buttonRef}
+                className="relative -ml-px inline-flex items-center space-x-2 rounded-r-md border border-gray-300 bg-gray-50 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+              >
+                <MagnifyingGlassIcon
+                  className="h-5 w-5 text-gray-400"
+                  aria-hidden="true"
+                />
+                <span>Search</span>
+              </a>
             </Link>
           )}
         </div>
