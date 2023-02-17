@@ -26,8 +26,8 @@ export default function Page() {
             </Heading>
             <p>
               Telescope is a NextJS demo app that allows a user to search the
-              stars of any GitHub user. It was built in a short 1-week timeline
-              using the follwoing technologies:
+              stars of any GitHub user. It was built in a short one-week
+              timeline using the following technologies:
             </p>
             <ul className="list-disc pl-5 mb-4 mt-2">
               <li>NextJS (React)</li>
@@ -42,11 +42,11 @@ export default function Page() {
             <ul className="list-disc pl-5 mb-4 mt-2">
               <li>Use a publicly available API</li>
               <li>Have at least two views: an overview and a details page</li>
-              <li>Be thoroughly tested and accesible</li>
+              <li>Be thoroughly tested and accessible</li>
             </ul>
             <p>
               Pretty easy right? I thought it would be, but there were definite
-              challenges - mainly corresponing with the choices I made as
+              challenges - mainly corresponding with the choices I made as
               outlined below (KISS).
             </p>
             <Heading level={3} className={"mt-4 mb-2 text-xl"}>
@@ -60,32 +60,32 @@ export default function Page() {
               Create React App vs NextJS
             </Heading>
             <p>
-              I struggled with a decesion between using Create React App or
+              I struggled with a decision between using Create React App or
               NextJS. The project requirements made this seem like an easy
               choice for CRA (single page app). But like a moth to a flame I was
-              drawn to that new hottness. Yes, I&apos;m talking about NestJS 13,
+              drawn to that new hotness. Yes, I&apos;m talking about NextJS 13,
               with the new (still in beta) app directory layout. This did
               simplify building SPA style routing, but introduced a host of
               complexity to testing and general overhead. I also wanted to see
-              if I could improve accesiblility, SEO and performance with NextJS.
+              if I could improve accessibility, SEO and performance with NextJS.
             </p>
             <Heading level={4} className={"mt-4 mb-2 text-lg"}>
               JavaScript vs TypeScript
             </Heading>
             <p>
-              Attmitedly (and as I&apos;m sure you can tell reading the code) I
+              Admittedly (and as I&apos;m sure you can tell reading the code) I
               do not have a ton of experience using TypeScript. I last used
-              TypeScript professionally over 2 years ago, and was pleasently
+              TypeScript professionally over 2 years ago, and was pleasantly
               surprised at how much the tooling has improved. I was able to get
               up and running with TypeScript in NextJS in a matter of minutes,
               and the IDE support was great. However, my lack of experience here
               led to some frustration with the type system, and I found myself
               spending more time than I would have liked trying to get those red
-              squigleeze to go away. I also found myself using <code>any</code>{" "}
-              in more places than I would have liked. Utlimately though I can
-              see the benefits of investing time up front using TypeScript. It
-              seems to be a very useful tool and I will continue learning it and
-              using it in my projects.
+              squiggles to go away. I also found myself using <code>any</code>{" "}
+              in more places than I would have liked. Ultimately I can see the
+              benefits of investing time upfront using TypeScript. It seems to
+              be a very useful tool and I will continue learning it and using it
+              in my projects.
             </p>
             <Heading level={4} className={"mt-4 mb-2 text-lg"}>
               PHPStorm (Jetbrains) vs VSCode
@@ -105,7 +105,7 @@ export default function Page() {
             <p>
               Similarly to the choice between JavaScript and TypeScript, I use
               REST APIs daily, while I haven&apos;t worked with GraphQL
-              professionally in over 2 years. I again was pleasently surprise by
+              professionally in over 2 years. I again was pleasantly surprise by
               how the tooling has improved in that time. The GitHub GraphQL
               documentation was great and I was able to grab just the data I
               needed with very little effort (although I&apos;m sure I could
@@ -116,11 +116,11 @@ export default function Page() {
             </Heading>
             <p>
               I typically do my professional and personal development on a Mac,
-              but since I was treating this project as an excercise in
-              masochism, I might as go all the way right? Thank goodness for
-              Windows Subsystem for Linux (WSL) it&apos;s integration with
-              VSCode on Windows 11. It might actually be easier to get a project
-              up and running on a Windows machine now than a Mac.
+              but since I was treating this project as an exercise in masochism,
+              I might as go all the way right? Thank goodness for Windows
+              Subsystem for Linux (WSL) and its integration with VSCode on
+              Windows 11. It might actually be easier to get a project up and
+              running on a Windows machine now than a Mac.
             </p>
             <Heading level={4} className={"mt-4 mb-2 text-lg"}>
               Vue.js vs React
@@ -142,7 +142,7 @@ export default function Page() {
             </p>
             <ul className="list-disc pl-5 mb-4 mt-2">
               <li>
-                Add a graph of the different repository languanges a user has
+                Add a graph of the different repository languages a user has
                 starred. We&apos;re already pulling this information down.
               </li>
               <li>
@@ -171,12 +171,12 @@ export default function Page() {
             </Heading>
             <p>
               Perfect. I clearly didn&apos;t get to all I wanted to. The test
-              coverage isn&apos;t all there. While the app should be accesible
+              coverage isn&apos;t all there. While the app should be accessible
               the performance didn&apos;t pan out. There are still a few red
-              squiglees in the codebase, <code>any</code> is sprinked throughout
-              and I&apos;m still not 100% sure how to properly use generics.
-              However, I do think this was a succesful excercise and learning
-              experience, and I&apos;m excited to continue to work on and
+              squiggles in the codebase, <code>any</code> is sprinkled
+              throughout and I&apos;m still not 100% sure how to properly use
+              generics. However, I do think this was a successful exercise and
+              learning experience, and I'm excited to continue to work on and
               improve the project in the future.
             </p>
           </div>
