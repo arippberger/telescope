@@ -4,6 +4,7 @@ import { MagnifyingGlassIcon, UsersIcon } from "@heroicons/react/20/solid";
 import { gql } from "graphql-request";
 import Link from "next/link";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { cursorTo } from "readline";
 
 interface Props {
   searchValue: string;
@@ -69,8 +70,18 @@ const USER_STARRED_REPOSITORIES_QUERY = gql`
 `;
 
 export default function Search(props: Props) {
+  const {
+    cursor,
+    searchValue,
+    setStars,
+    setSearchValue,
+    setNextPage,
+    setPreviousPage,
+    setIsLoading,
+  } = props;
+
   const getUserStarsUsingFetch = (username: string, cursor?: string) => {
-    props.setIsLoading(true);
+    setIsLoading(true);
     return fetch("https://api.github.com/graphql", {
       method: "POST",
       headers: {
@@ -85,31 +96,31 @@ export default function Search(props: Props) {
         },
       }),
     }).then((res) => {
-      props.setIsLoading(false);
+      setIsLoading(false);
       return res.json();
     });
   };
 
   useEffect(() => {
-    getUserStarsUsingFetch(props.searchValue, props.cursor).then(({ data }) => {
-      props.setStars(data);
+    getUserStarsUsingFetch(searchValue, cursor).then(({ data }) => {
+      setStars(data);
 
-      if (data.user.starredRepositories.pageInfo.hasNextPage) {
-        props.setNextPage({
+      if (data.user?.starredRepositories.pageInfo.hasNextPage) {
+        setNextPage({
           cursor: data.user.starredRepositories.pageInfo.endCursor,
         });
       }
 
-      if (data.user.starredRepositories.pageInfo.hasPreviousPage) {
-        props.setPreviousPage({
+      if (data.user?.starredRepositories.pageInfo.hasPreviousPage) {
+        setPreviousPage({
           cursor: data.user.starredRepositories.pageInfo.startCursor,
         });
       }
     });
-  }, [props.cursor]);
+  }, [cursor]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    props.setSearchValue(event.target.value);
+    setSearchValue(event.target.value);
   };
 
   return (
@@ -130,13 +141,13 @@ export default function Search(props: Props) {
             role="textbox"
             className="block w-full rounded-none rounded-l-md border-gray-300 pl-10 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             placeholder="arippberger"
-            value={props.searchValue}
+            value={searchValue}
             onChange={handleInputChange}
           />
         </div>
         <Link
           data-testid="search-button"
-          href={props.searchValue ? `/users/${props.searchValue}` : "/"}
+          href={searchValue ? `/users/${searchValue}` : "/"}
           className="relative -ml-px inline-flex items-center space-x-2 rounded-r-md border border-gray-300 bg-gray-50 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
         >
           <MagnifyingGlassIcon

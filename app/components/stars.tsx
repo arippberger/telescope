@@ -45,6 +45,20 @@ export interface RepoObject {
 }
 
 export default function Stars(props: Props) {
+  if (!props.stars.user) {
+    return (
+      <div className="mt-4 flex items-center justify-center">
+        <div
+          className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4"
+          role="alert"
+        >
+          <p className="font-bold">No User</p>
+          <p>Please enter a valid GitHub user.</p>
+        </div>
+      </div>
+    );
+  }
+
   const repos = props.stars.user.starredRepositories.edges.map(
     (repo: RepoObject) => {
       const node = repo.node;
