@@ -15,6 +15,7 @@ export default function Page() {
             </Heading>
             <Image
               src="/SPA.JPG"
+              priority={true}
               width={672}
               height={375}
               className="my-8"
@@ -138,33 +139,33 @@ export default function Page() {
             <p>
               There are a number of items I had as &quot;stretch goals&quot;
               that I wasn&apos;t able to accomplish in the short timeline.
-              <ul className="list-disc pl-5 mb-4 mt-2">
-                <li>
-                  Add a graph of the different repository languanges a user has
-                  starred. We&apos;re already pulling this information down.
-                </li>
-                <li>
-                  Add Supabase integration - allow users to log in and star
-                  repositories directly.
-                </li>
-                <li>
-                  Night theme - not having a starry background feels like a huge
-                  miss.
-                </li>
-                <li>
-                  Implement Playwright - I was excited to try this as an
-                  alternative to Cypress.
-                </li>
-                <li>
-                  UI/UX Improvements - There are places where the loading
-                  isn&apos;t tight and interactivity isn&apos;t highlighted.
-                </li>
-                <li>
-                  Caching = I tried getting SWR up and running with GraphQL but
-                  hit a roadblock and ran out of time.
-                </li>
-              </ul>
             </p>
+            <ul className="list-disc pl-5 mb-4 mt-2">
+              <li>
+                Add a graph of the different repository languanges a user has
+                starred. We&apos;re already pulling this information down.
+              </li>
+              <li>
+                Add Supabase integration - allow users to log in and star
+                repositories directly.
+              </li>
+              <li>
+                Night theme - not having a starry background feels like a huge
+                miss.
+              </li>
+              <li>
+                Implement Playwright - I was excited to try this as an
+                alternative to Cypress.
+              </li>
+              <li>
+                UI/UX Improvements - There are places where the loading
+                isn&apos;t tight and interactivity isn&apos;t highlighted.
+              </li>
+              <li>
+                Caching = I tried getting SWR up and running with GraphQL but
+                hit a roadblock and ran out of time.
+              </li>
+            </ul>
             <Heading level={2} className={"text-3xl mt-4 mb-4"}>
               What this isn&apos;t
             </Heading>
