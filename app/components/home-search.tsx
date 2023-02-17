@@ -15,7 +15,6 @@ export default function HomeSearch() {
   };
 
   const handleEmptySearch = (e: { preventDefault: () => void }) => {
-    console.log("handleEmptySearch", searchValue);
     if (searchValue === "") {
       setIsEmptyError(true);
       e.preventDefault();
