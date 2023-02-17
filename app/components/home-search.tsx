@@ -54,7 +54,7 @@ export default function HomeSearch() {
               id="user"
               role="textbox"
               className="block w-full rounded-none rounded-l-md border-gray-300 pl-10 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-              placeholder="arippberger"
+              placeholder="username"
               value={searchValue}
               onChange={handleInputChange}
               onKeyDown={handleKeyPress}
