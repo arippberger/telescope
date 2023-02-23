@@ -5,68 +5,10 @@ import clsx from "clsx";
 import { Fragment } from "react";
 import Image from "next/image";
 
-interface Stargazer {
-  avatarUrl: string;
-  id: string;
-  name: string;
-  url: string;
-}
-
-interface Topic {
-  url: string;
-  topic: {
-    name: string;
-    id: string;
-  };
-}
-
-interface Commit {
-  author: {
-    avatarUrl: string;
-    url: string;
-    login: string;
-  };
-  id: string;
-  bodyText: string;
-  url: string;
-  commit: {
-    message: string;
-  };
-}
-
-interface Repo {
-  name: string;
-  nameWithOwner: string;
-  description: string;
-  url: string;
-  stargazerCount: number;
-  forkCount: number;
-  isPrivate: boolean;
-  pushedAt: string;
-  updatedAt: string;
-  stargazers: {
-    nodes: Stargazer[];
-  };
-  languages: {
-    edges: {
-      node: {
-        id: string;
-        name: string;
-        color: string;
-      };
-    }[];
-  };
-  repositoryTopics: {
-    nodes: Topic[];
-  };
-  commitComments: {
-    nodes: Commit[];
-  };
-  licenseInfo: {
-    name: string;
-    description: string;
-  };
-}
+import Stargazer from "../types/Stargazer";
+import Topic from "../types/Topic";
+import Commit from "../types/Commit";
+import Repo from "../types/Repo";
 
 export default function Tabs({ repo }: { repo: Repo }) {
   return (

@@ -1,42 +1,12 @@
 "use client";
 
 import Star from "./star";
-
-interface Stars {
-  user: {
-    starredRepositories: {
-      totalCount: number;
-      edges: any;
-      pageInfo: {
-        endCursor: string;
-        hasNextPage: boolean;
-        hasPreviousPage: boolean;
-        startCursor: string;
-      };
-    };
-  };
-}
+import StarsInterface from "../types/Stars";
+import RepoNode from "../types/RepoNode";
 
 interface Props {
   searchValue: string;
-  stars: Stars;
-}
-
-interface RepoNode {
-  description: string;
-  forkCount: number;
-  isPrivate: boolean;
-  languages: {
-    edges: any;
-  };
-  name: string;
-  nameWithOwner: string;
-  pushedAt: string;
-  repositoryTopics: Object;
-  stargazerCount: number;
-  updatedAt: string;
-  url: string;
-  href: string;
+  stars: StarsInterface;
 }
 
 export interface RepoObject {

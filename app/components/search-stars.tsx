@@ -6,24 +6,6 @@ import Stars from "./stars";
 import { FadeLoader } from "react-spinners";
 import Pagination from "./pagination";
 
-interface Stars {
-  user: {
-    starredRepositories: {
-      totalCount: number;
-      edges: {
-        starredAt: string;
-        node: any;
-      };
-      pageInfo: {
-        endCursor: string;
-        hasNextPage: boolean;
-        hasPreviousPage: boolean;
-        startCursor: string;
-      };
-    };
-  };
-}
-
 interface Props {
   user: string;
 }
