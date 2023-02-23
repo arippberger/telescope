@@ -17,7 +17,10 @@ export interface RepoObject {
 export default function Stars(props: Props) {
   if (!props.stars.user) {
     return (
-      <div className="mt-4 flex items-center justify-center">
+      <div
+        className="mt-4 flex items-center justify-center"
+        aria-live="assertive"
+      >
         <div
           className="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4"
           role="alert"
