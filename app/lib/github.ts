@@ -228,15 +228,50 @@ export async function getRepository(name: string, owner: string) {
   }
 }
 
+/**
+ * Generates a consistent URL slug from a repository's nameWithOwner
+ * @param nameWithOwner - Repository identifier in format "owner/repository-name"
+ * @returns URL-safe slug in format "owner-repository-name"
+ * 
+ * @example
+ * generateRepositorySlug("facebook/react") // "facebook-react"
+ * generateRepositorySlug("babel/babel-preset-env") // "babel-babel-preset-env"
+ */
+export function generateRepositorySlug(nameWithOwner: string): string {
+  if (!nameWithOwner || !nameWithOwner.includes('/')) {
+    throw new Error('Invalid nameWithOwner format. Expected "owner/repository"');
+  }
+  
+  return nameWithOwner.replace(/\//g, "-");
+}
+
+/**
+ * Parses a repository slug back to owner and repository name
+ * @param slug - Repository slug in format "owner-repository-name"
+ * @returns Object with owner and repository name
+ * 
+ * @example
+ * parseRepositorySlug("facebook-react") // { owner: "facebook", name: "react" }
+ * parseRepositorySlug("babel-babel-preset-env") // { owner: "babel", name: "babel-preset-env" }
+ */
 export function parseRepositorySlug(slug: string): { owner: string; name: string } {
-  // Improved parsing to handle repository names with hyphens
+  if (!slug || typeof slug !== 'string') {
+    throw new Error('Invalid repository slug: must be a non-empty string');
+  }
+
+  // Split on hyphens and handle repository names with multiple hyphens
   const parts = slug.split('-');
   if (parts.length < 2) {
-    throw new Error('Invalid repository slug format');
+    throw new Error('Invalid repository slug format. Expected "owner-repository-name"');
   }
   
   const owner = parts[0];
   const name = parts.slice(1).join('-'); // Join remaining parts to handle repo names with hyphens
+  
+  // Validate that we have meaningful values
+  if (!owner || !name) {
+    throw new Error('Invalid repository slug: both owner and repository name must be non-empty');
+  }
   
   return { owner, name };
 } 

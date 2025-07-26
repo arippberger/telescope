@@ -3,15 +3,16 @@
 import Star from "./star";
 import StarsInterface from "../types/Stars";
 import RepoNode from "../types/RepoNode";
+import { generateRepositorySlug } from "../lib/github";
+import { StarredRepositoryEdge, RepositoryWithSlug } from "../types/github-api";
+
+interface StarRepo extends RepositoryWithSlug {
+  href: string;
+}
 
 interface Props {
   searchValue: string;
   stars: StarsInterface;
-}
-
-export interface RepoObject {
-  starredAt: string;
-  node: RepoNode;
 }
 
 export default function Stars(props: Props) {
@@ -33,7 +34,7 @@ export default function Stars(props: Props) {
   }
 
   const repos = props.stars.user.starredRepositories.edges.map(
-    (repo: RepoObject) => {
+    (repo: StarredRepositoryEdge, index: number) => {
       const node = repo.node;
 
       return {
@@ -42,7 +43,8 @@ export default function Stars(props: Props) {
           node.name.length > 12
             ? node.name.slice(0, 12) + "..."
             : repo.node.name,
-        slug: node.nameWithOwner.replace(/\//g, "-"),
+        slug: generateRepositorySlug(node.nameWithOwner),
+        href: `/users/${props.searchValue}/stars/${generateRepositorySlug(node.nameWithOwner)}`,
         initials: node.name
           .split(/[-_]/)
           .map((word: string) => word[0])
@@ -65,10 +67,7 @@ export default function Stars(props: Props) {
           className="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4"
         >
           {repos.map(
-            (
-              repo: RepoNode & { initials: string; slug: string },
-              index: any
-            ) => (
+            (repo: RepositoryWithSlug, index: number) => (
               <Star
                 key={`${repo.name}-${index}`}
                 repo={repo}
