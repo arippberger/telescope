@@ -182,15 +182,16 @@ export async function getUserStarredRepositories(username: string, cursor?: stri
     );
 
     return data;
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('GitHub API Error:', error);
     
-    // Handle specific GitHub API errors
-    if (error.response?.status === 404) {
+    // Handle specific GitHub API errors  
+    const apiError = error as { response?: { status?: number } };
+    if (apiError.response?.status === 404) {
       throw new Error('User not found');
     }
     
-    if (error.response?.status === 403) {
+    if (apiError.response?.status === 403) {
       throw new Error('Rate limit exceeded. Please try again later.');
     }
 
@@ -213,14 +214,15 @@ export async function getRepository(name: string, owner: string) {
     );
 
     return data;
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('GitHub API Error:', error);
     
-    if (error.response?.status === 404) {
+    const apiError = error as { response?: { status?: number } };
+    if (apiError.response?.status === 404) {
       throw new Error('Repository not found');
     }
     
-    if (error.response?.status === 403) {
+    if (apiError.response?.status === 403) {
       throw new Error('Rate limit exceeded. Please try again later.');
     }
 

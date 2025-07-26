@@ -4,11 +4,7 @@ import Star from "./star";
 import StarsInterface from "../types/Stars";
 import RepoNode from "../types/RepoNode";
 import { generateRepositorySlug } from "../lib/github";
-import { StarredRepositoryEdge, RepositoryWithSlug } from "../types/github-api";
-
-interface StarRepo extends RepositoryWithSlug {
-  href: string;
-}
+import { StarredRepositoryEdge, RepositoryWithUIProps } from "../types/github-api";
 
 interface Props {
   searchValue: string;
@@ -33,7 +29,7 @@ export default function Stars(props: Props) {
     );
   }
 
-  const repos = props.stars.user.starredRepositories.edges.map(
+  const repos: RepositoryWithUIProps[] = props.stars.user.starredRepositories.edges.map(
     (repo: StarredRepositoryEdge, index: number) => {
       const node = repo.node;
 
@@ -67,7 +63,7 @@ export default function Stars(props: Props) {
           className="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4"
         >
           {repos.map(
-            (repo: RepositoryWithSlug, index: number) => (
+            (repo: RepositoryWithUIProps, index: number) => (
               <Star
                 key={`${repo.name}-${index}`}
                 repo={repo}

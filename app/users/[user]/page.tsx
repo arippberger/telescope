@@ -1,20 +1,13 @@
 import PageLayout from "../../components/page-layout";
 import Search from "../../components/search";
 import UserStarsContent from "../../components/user-stars-content";
+import ErrorBoundary from "../../components/error-boundary";
 import { Suspense } from "react";
-import { FadeLoader } from "react-spinners";
+import { RepositoryGridSkeleton } from "../../components/loading-spinner";
 
 interface PageProps {
   params: Promise<{ user: string }>;
   searchParams: Promise<{ cursor?: string }>;
-}
-
-function LoadingSpinner() {
-  return (
-    <div className="flex justify-center my-1 mt-20">
-      <FadeLoader color="#9089FC" />
-    </div>
-  );
 }
 
 export default async function Page({ params, searchParams }: PageProps) {
@@ -25,10 +18,12 @@ export default async function Page({ params, searchParams }: PageProps) {
     <PageLayout>
       <Search searchValue={user} />
       
-      <Suspense fallback={<LoadingSpinner />}>
-        {/* @ts-expect-error Async Server Component */}
-        <UserStarsContent user={user} cursor={cursor} />
-      </Suspense>
+      <ErrorBoundary>
+        <Suspense fallback={<RepositoryGridSkeleton count={12} />}>
+          {/* @ts-expect-error Async Server Component */}
+          <UserStarsContent user={user} cursor={cursor} />
+        </Suspense>
+      </ErrorBoundary>
     </PageLayout>
   );
 }

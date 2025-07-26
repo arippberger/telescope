@@ -5,14 +5,10 @@ import { EyeIcon, StarIcon, EllipsisVerticalIcon } from "@heroicons/react/20/sol
 import { Fragment, useState } from "react";
 import clsx from "clsx";
 import Link from "next/link";
-import { RepositoryWithSlug } from "../types/github-api";
-
-interface StarRepo extends RepositoryWithSlug {
-  href: string;
-}
+import { RepositoryWithUIProps } from "../types/github-api";
 
 interface Props {
-  repo: StarRepo;
+  repo: RepositoryWithUIProps;
   searchValue: string;
 }
 

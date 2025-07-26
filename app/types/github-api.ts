@@ -174,4 +174,8 @@ export interface RepositoryResponse {
 export interface RepositoryWithSlug extends GitHubRepository {
   slug: string;
   initials: string;
+}
+
+export interface RepositoryWithUIProps extends RepositoryWithSlug {
+  href: string;
 } 
