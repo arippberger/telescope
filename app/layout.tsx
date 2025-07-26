@@ -2,26 +2,42 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import Nav from "./components/nav";
 import type { Metadata } from "next";
+import { Suspense } from "react";
+import PerformanceMonitor from "./components/performance-monitor";
 
-const inter = Inter({
-  weight: ["200", "400", "600", "700"],
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
-    default: "Telescope | Explore GitHub Stars",
-    template: "%s | Telescope | Explore GitHub Stars",
+    default: "Telescope",
+    template: "%s | Telescope"
   },
+  description: "Explore a GitHub user's stars using the GitHub GraphQL API.",
+  keywords: ["GitHub", "stars", "repositories", "GraphQL", "Next.js"],
+  authors: [{ name: "Telescope Team" }],
+  creator: "Telescope",
+  publisher: "Telescope",
   robots: {
     index: true,
     follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-    },
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://telescope.example.com",
+    title: "Telescope",
+    description: "Explore a GitHub user's stars using the GitHub GraphQL API.",
+    siteName: "Telescope",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Telescope",
+    description: "Explore a GitHub user's stars using the GitHub GraphQL API.",
+  },
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
   },
 };
 
@@ -32,39 +48,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      {/*
-        <head /> will contain the components returned by the nearest parent
-        head.tsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
-      */}
-      <head />
-      <body className={`${inter.className}`}>
-        <div className="isolate bg-white">
-          <div className="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]">
-            <svg
-              className="relative left-[calc(50%-11rem)] -z-10 h-[21.1875rem] max-w-none -translate-x-1/2 rotate-[30deg] sm:left-[calc(50%-30rem)] sm:h-[42.375rem]"
-              viewBox="0 0 1155 678"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill="url(#45de2b6b-92d5-4d68-a6a0-9b9b2abad533)"
-                fillOpacity=".3"
-                d="M317.219 518.975L203.852 678 0 438.341l317.219 80.634 204.172-286.402c1.307 132.337 45.083 346.658 209.733 145.248C936.936 126.058 882.053-94.234 1031.02 41.331c119.18 108.451 130.68 295.337 121.53 375.223L855 299l21.173 362.054-558.954-142.079z"
-              />
-              <defs>
-                <linearGradient
-                  id="45de2b6b-92d5-4d68-a6a0-9b9b2abad533"
-                  x1="1155.49"
-                  x2="-78.208"
-                  y1=".177"
-                  y2="474.645"
-                  gradientUnits="userSpaceOnUse"
-                >
-                  <stop stopColor="#9089FC" />
-                  <stop offset={1} stopColor="#FF80B5" />
-                </linearGradient>
-              </defs>
-            </svg>
-          </div>
+      <body className={inter.className}>
+        <Suspense fallback={null}>
+          <PerformanceMonitor />
+        </Suspense>
+        <div className="min-h-screen bg-white">
           <Nav />
           {children}
         </div>
