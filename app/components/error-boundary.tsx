@@ -43,7 +43,7 @@ export default class ErrorBoundary extends Component<Props, State> {
       this.props.onError(error, errorInfo);
     }
 
-    // In a real app, you might send this to an error reporting service
+    // TODO: Integrate with error reporting service
     // reportErrorToService(error, errorInfo);
   }
 
