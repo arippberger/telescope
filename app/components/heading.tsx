@@ -1,5 +1,5 @@
 import React from "react";
-import { Syne } from "@next/font/google";
+import { Syne } from "next/font/google";
 
 const syne = Syne({
   weight: ["500", "600", "700", "800"],

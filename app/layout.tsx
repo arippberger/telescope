@@ -1,6 +1,5 @@
-"use client";
 import "./globals.css";
-import { Inter } from "@next/font/google";
+import { Inter } from "next/font/google";
 import Nav from "./components/nav";
 import type { Metadata } from "next";
 
