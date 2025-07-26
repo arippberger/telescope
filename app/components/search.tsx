@@ -15,7 +15,6 @@ export default function Search({ searchValue }: Props) {
   
   const {
     searchQuery,
-    debouncedQuery,
     isSearching,
     searchHistory,
     setSearchQuery,

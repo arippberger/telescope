@@ -1,13 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Enable experimental features for better performance
-  experimental: {
-    // Optimize CSS for faster loading
-    optimizeCss: true,
-    
-    // Enable server components optimization
-    serverComponentsExternalPackages: ['graphql-request'],
-  },
+  // External packages for server components
+  serverExternalPackages: ['graphql-request'],
 
   // Performance optimizations
   images: {
@@ -113,9 +107,6 @@ const nextConfig = {
   
   // Enable gzip compression
   compress: true,
-  
-  // Optimize for production builds
-  swcMinify: true,
   
   // Enable static optimization
   trailingSlash: false,
