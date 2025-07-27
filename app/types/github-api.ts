@@ -55,17 +55,6 @@ export interface StargazerConnection {
   nodes: Stargazer[];
 }
 
-export interface Collaborator {
-  id: string;
-  name: string | null;
-  avatarUrl: string;
-  url: string;
-}
-
-export interface CollaboratorConnection {
-  nodes: Collaborator[];
-}
-
 export interface Release {
   name: string | null;
   tag: {
@@ -132,7 +121,6 @@ export interface GitHubRepository {
   languages: LanguageConnection;
   repositoryTopics: TopicConnection;
   stargazers: StargazerConnection;
-  collaborators: CollaboratorConnection;
   watchers: WatcherConnection;
   releases: ReleaseConnection;
   commitComments: CommitCommentConnection;

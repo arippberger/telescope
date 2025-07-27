@@ -1,6 +1,6 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-You'll need to create a `.env.local` file in the root and add a `NEXT_PUBLIC_GITHUB_TOKEN` environment variable e.g. `NEXT_PUBLIC_GITHUB_TOKEN=ghp_xxxxxxxxxx`. Then you can run `npm install && npm run dev` and access the site in your browser at `https://localhost:3000`.
+You'll need to create a `.env.local` file in the root and add a `GITHUB_TOKEN` environment variable e.g. `GITHUB_TOKEN=ghp_xxxxxxxxxx`. Then you can run `npm install && npm run dev` and access the site in your browser at `https://localhost:3000`.
 
 You can access the site on Vercel at https://telescope-iota.vercel.app.
 

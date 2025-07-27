@@ -65,14 +65,6 @@ export const USER_STARRED_REPOSITORIES_QUERY = gql`
 export const STARRED_REPOSITORY_QUERY = gql`
   query ($name: String!, $owner: String!) {
     repository(name: $name, owner: $owner) {
-      collaborators {
-        nodes {
-          avatarUrl
-          id
-          name
-          url
-        }
-      }
       description
       forkCount
       id
@@ -217,13 +209,44 @@ export async function getRepository(name: string, owner: string) {
   } catch (error: unknown) {
     console.error('GitHub API Error:', error);
     
-    const apiError = error as { response?: { status?: number } };
-    if (apiError.response?.status === 404) {
+    // Handle GraphQL errors (which come with 200 status but contain error details)
+    const graphqlError = error as { 
+      response?: { 
+        status?: number;
+        errors?: Array<{ type?: string; message?: string }>;
+      };
+      message?: string;
+    };
+    
+    // Check for GraphQL NOT_FOUND errors
+    if (graphqlError.response?.errors) {
+      const notFoundError = graphqlError.response.errors.find(
+        err => err.type === 'NOT_FOUND' || err.message?.includes('Could not resolve')
+      );
+      if (notFoundError) {
+        throw new Error(`Repository not found: ${notFoundError.message}`);
+      }
+    }
+    
+    // Check for HTTP 404
+    if (graphqlError.response?.status === 404) {
       throw new Error('Repository not found');
     }
     
-    if (apiError.response?.status === 403) {
+    // Check for rate limiting
+    if (graphqlError.response?.status === 403) {
       throw new Error('Rate limit exceeded. Please try again later.');
+    }
+    
+    // Check for authentication errors
+    if (graphqlError.response?.status === 401) {
+      throw new Error('Authentication failed. Please check your GitHub token.');
+    }
+
+    // Preserve original error message if it contains useful info
+    const originalMessage = graphqlError.message || 'Unknown error';
+    if (originalMessage.includes('Could not resolve') || originalMessage.includes('not found')) {
+      throw new Error(originalMessage);
     }
 
     throw new Error('Failed to fetch repository details');

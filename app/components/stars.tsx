@@ -42,7 +42,7 @@ export default function Stars(props: Props) {
   });
 
   return (
-    <div>
+    <div className="mx-auto max-w-4xl">
       <nav className="flex" aria-label="Breadcrumb">
         <ol role="list" className="flex items-center space-x-4">
           <li>
